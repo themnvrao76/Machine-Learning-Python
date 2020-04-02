@@ -1,0 +1,31 @@
+import numpy as np
+from math import sqrt
+from matplotlib import pyplot as plt
+from collections import Counter
+import warnings
+
+dataset={'k':[[1,2],[2,3,],[3,1]],'r':[[6,5],[7,7],[8,6]]}
+new_feature=[5,7]
+votes=[]
+
+def k_nearest_neighbors(data,predict,k=3):
+    if(len(data)>=k):
+        warnings.warn("k is too less")
+    distance=[]
+    for group in data:
+        for i in data[group]:
+            euclidean_ditance=np.linalg.norm(np.array(i)-np.array(predict))
+            distance.append([euclidean_ditance,group])
+    # for j in distance:
+    #     print(j)
+    votes=[i for i in sorted(distance) [:k]]
+    print(votes)
+    
+    print(Counter(votes).most_common(1))
+    vote_data=Counter(votes).most_common(1)[0][0]
+
+    return vote_data
+
+result=k_nearest_neighbors(dataset,new_feature,k=3)
+
+print(result)
